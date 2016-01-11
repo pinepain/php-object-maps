@@ -1,0 +1,26 @@
+sudo: false
+
+language: php
+
+php:
+  - 7.0
+  - nightly
+
+matrix:
+  allow_failures:
+    - php: nightly
+
+env:
+  - PHP_WEAK_VERSION=master
+  - PHP_WEAK_VERSION=v0.1.0
+
+before_install:
+   - sh install_php_weak_ext.sh ${PHP_WEAK_VERSION}
+   - echo 'extension = weak.so' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/weak.ini
+
+before_script:
+  - composer self-update
+  - composer install
+
+script:
+  - vendor/bin/phpunit --coverage-text --configuration phpunit.xml

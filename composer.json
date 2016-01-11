@@ -1,0 +1,40 @@
+{
+  "name": "pinepain/php-weak-lib",
+  "description": "Weak-referenced data structures for PHP",
+  "type": "library",
+  "license": "MIT",
+  "keywords": [
+    "php-weak",
+    "weak",
+    "reference",
+    "weakref",
+    "weakreference",
+    "weak data types",
+    "data structure"
+  ],
+  "authors": [
+    {
+      "name": "Bogdan Padalko",
+      "email": "pinepain@gmail.com",
+      "homepage": "https://github.com/pinepain"
+    }
+  ],
+  "require": {
+    "php": "~7.0",
+    "ext-weak": "~0.1.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^5.1",
+    "pinepain/php-weak-stubs": "~0.1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Weak\\": "./src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Weak\\Tests\\": "./tests"
+    }
+  }
+}

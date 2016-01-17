@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the pinepain/php-weak PHP extension.
+ * This file is part of the pinepain/php-weak-lib PHP library.
  *
  * Copyright (c) 2016 Bogdan Padalko <zaq178miami@gmail.com>
  *
@@ -14,10 +14,8 @@
 namespace Weak\Tests;
 
 use PHPUnit_Framework_TestCase;
-
-use Weak\HashedReference;
-
 use stdClass;
+use Weak\HashedReference;
 
 class HashedReferenceTest extends PHPUnit_Framework_TestCase
 {

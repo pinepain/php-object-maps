@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the pinepain/php-weak PHP extension.
+ * This file is part of the pinepain/php-weak-lib PHP library.
  *
  * Copyright (c) 2016 Bogdan Padalko <zaq178miami@gmail.com>
  *

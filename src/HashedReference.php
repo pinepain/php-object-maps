@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the pinepain/php-weak PHP extension.
+ * This file is part of the pinepain/php-weak-lib PHP library.
  *
  * Copyright (c) 2016 Bogdan Padalko <zaq178miami@gmail.com>
  *
@@ -13,6 +13,7 @@
 
 namespace Weak;
 
+use function spl_object_hash;
 
 class HashedReference extends Reference
 {
@@ -22,13 +23,7 @@ class HashedReference extends Reference
     {
         parent::__construct($referent, $notify);
 
-        //$this->hash = ($hash_function ?? 'spl_object_hash')($referent);
-
-        if ($hash_function) {
-            $this->hash = $hash_function($referent);
-        } else {
-            $this->hash = spl_object_hash($referent);
-        }
+        $this->hash = $hash_function ? $hash_function($referent) : spl_object_hash($referent);
     }
 
     public function getHash() : string

@@ -1,51 +1,150 @@
 # Weak-referenced data structures for PHP [![Build Status](https://travis-ci.org/pinepain/php-weak-lib.svg)](https://travis-ci.org/pinepain/php-weak-lib)
 
-This library base on [php-weak][php-weak-ext] PHP extension and provides various weak data types.
+This library is based on [php-weak][php-weak-ext] PHP extension and provides various weak data structures:
 
-Currently only weak version of [`SplObjectStorage`][php-SplObjectStorage] provided, which is basically a
-[`WeakMap`][js-WeakMap] in terms of ECMA 2015, but for PHP.
+ - [class `Weak\WeakKeyMap`](class-weakweakkeymap)
+ - [class `Weak\WeakValueMap`](class-weakweakvaluemap)
+ - [class `Weak\WeakKeyValueMap`](class-weakweakkeyvaluemap)
 
-## About:
 
-`Weak\SplObjectStorage` aims to be a simple drop-in replacement for SPL `SplObjectStorage` when you need to remove
-key (and it optional value) after key object GCed. This is useful when you want to organize some runtime caching or
-doing components integrations which converts one object into another and have to keep transformation table of one into
-another. But basically it is `WeakMap` or `WeakHashMap`, depends of what languages you are familiar with. If you don't
-set any value for object than it will be just a `WeakSet` for you.
+## Requirements
 
-In short: when key object GCed, it will be removed from `Weak\SplObjectStorage`
+[php-weak][php-weak-ext] PHP extension required. PHP 7 only (due to php-weak).
+
 
 ## Installation:
 
 `composer require pinepain/php-weak-lib`
 
-## Example:
+
+## Docs:
+
+#### Class `Weak\WeakKeyMap`
+
+Mapping class that references keys weakly. Entries will be discarded when there is no longer a reference to the key.
+This can be used to associate additional data with an object owned by other parts of an application without adding
+attributes to those objects. This can be especially useful with objects that override attribute accesses.
+Built on top of [`SplObjectStorage`][php-SplObjectStorage].
+
+##### Caution
+
+Because a `Weak\WeakKeyMap` is built on top of a `SplObjectStorage`, it must not change size when
+iterating over it. This can be difficult to ensure for a `Weakref\WeakKeyMap` because actions performed by the program
+during iteration may cause items in the storage to vanish "by magic" (as a side effect of garbage collection).
+
+##### Example
 
 ```php
 <?php
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use Weak\SplObjectStorage;
+use Weak\WeakKeyMap;
 
-$storage = new SplObjectStorage();
+$map = new WeakKeyMap();
 
-$obj = new stdClass();
-$obj->obj = 'I am object';
+$obj1 = new stdClass();
+$inf1 = new stdClass();
 
-$inf = new stdClass();
-$inf->inf = 'I am info';
+$obj2 = new stdClass();
+$inf2 = new stdClass();
 
-$storage->attach($obj, $inf);
+$map->attach($obj1, $inf1);
+$map->attach($obj2, $inf2);
 
-var_dump($storage->count()); // 1
+var_dump($map->count()); // 2
 
-// Let's destroy object
-$obj = null;
+// Let's destroy key
+$obj1 = null;
 
-var_dump($storage->count()); // 0
+var_dump($map->count()); // 1
 ```
-    
+
+
+#### Class `Weak\WeakValueMap`
+
+Mapping class that references values weakly. Entries will be discarded when reference to the value exists any more.
+Built on top of [`SplObjectStorage`][php-SplObjectStorage].
+
+##### Caution
+
+Because a `Weak\WeakValueMap` is built on top of a `SplObjectStorage`, it must not change size when
+iterating over it. This can be difficult to ensure for a `Weakref\WeakValueMap` because actions performed by the program
+during iteration may cause items in the storage to vanish "by magic" (as a side effect of garbage collection).
+
+##### Example
+
+```php
+<?php
+
+require __DIR__ . '/../vendor/autoload.php';
+
+use Weak\WeakValueMap;
+
+$map = new WeakValueMap();
+
+$obj1 = new stdClass();
+$inf1 = new stdClass();
+
+$obj2 = new stdClass();
+$inf2 = new stdClass();
+
+$map->attach($obj1, $inf1);
+$map->attach($obj2, $inf2);
+
+var_dump($map->count()); // 2
+
+// Let's destroy value
+$inf1 = null;
+
+var_dump($map->count()); // 1
+```
+
+
+#### Class `Weak\WeakKeyValueMap`
+
+Mapping class that references values weakly. Entries will be discarded when reference to the key or value exists any more.
+Built on top of [`SplObjectStorage`][php-SplObjectStorage].
+
+##### Caution
+
+Because a `Weak\WeakKeyValueMap` is built on top of a `SplObjectStorage`, it must not change size when
+iterating over it. This can be difficult to ensure for a `Weakref\WeakKeyValueMap` because actions performed by the program
+during iteration may cause items in the storage to vanish "by magic" (as a side effect of garbage collection).
+
+##### Example
+
+```php
+<?php
+
+require __DIR__ . '/../vendor/autoload.php';
+
+use Weak\WeakValueMap;
+
+$map = new WeakKeyValueMap();
+
+$obj1 = new stdClass();
+$inf1 = new stdClass();
+
+$obj2 = new stdClass();
+$inf2 = new stdClass();
+
+$map->attach($obj1, $inf1);
+$map->attach($obj2, $inf2);
+
+var_dump($map->count()); // 2
+
+// Let's destroy key
+$obj1 = null;
+
+var_dump($map->count()); // 1
+
+// Let's destroy value
+$inf2 = null;
+
+var_dump($map->count()); // 0
+```
+
 ## License
 
 [php-weak-lib](https://github.com/pinepain/php-weak-lib) PHP library is a free software licensed under the [MIT license](http://opensource.org/licenses/MIT).

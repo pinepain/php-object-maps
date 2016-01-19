@@ -21,11 +21,11 @@
   ],
   "require": {
     "php": "~7.0",
-    "ext-weak": "~0.1.0"
+    "ext-weak": "~0.2.2"
   },
   "require-dev": {
     "phpunit/phpunit": "^5.1",
-    "pinepain/php-weak-stubs": "~0.1.0"
+    "pinepain/php-weak-stubs": "~0.2.2"
   },
   "autoload": {
     "psr-4": {

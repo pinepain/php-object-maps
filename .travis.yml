@@ -6,13 +6,17 @@ php:
   - 7.0
   - nightly
 
+cache:
+  directories:
+    - $HOME/.composer/cache
+
 matrix:
   allow_failures:
     - php: nightly
 
 env:
   - PHP_WEAK_VERSION=master
-  - PHP_WEAK_VERSION=v0.1.0
+  - PHP_WEAK_VERSION=v0.2.2
 
 before_install:
    - sh install_php_weak_ext.sh ${PHP_WEAK_VERSION}

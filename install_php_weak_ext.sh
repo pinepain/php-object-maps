@@ -14,7 +14,7 @@ if [ ! -d "$HOME/php-weak" ]; then
 else
   echo 'Using cached directory.';
   cd $HOME/php-weak
-  git fetch
+  git pull
 fi
 
 cd $HOME/php-weak

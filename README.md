@@ -1,4 +1,8 @@
-# Weak-referenced data structures for PHP [![Build Status](https://travis-ci.org/pinepain/php-weak-lib.svg)](https://travis-ci.org/pinepain/php-weak-lib)
+# Weak-referenced data structures for PHP
+
+[![Build Status](https://travis-ci.org/pinepain/php-weak-lib.svg)](https://travis-ci.org/pinepain/php-weak-lib)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/pinepain/php-weak-lib/badges/quality-score.png)](https://scrutinizer-ci.com/g/pinepain/php-weak-lib)
+[![Code Coverage](https://scrutinizer-ci.com/g/pinepain/php-weak-lib/badges/coverage.png)](https://scrutinizer-ci.com/g/pinepain/php-weak-lib)
 
 This library is based on [php-weak][php-weak-ext] PHP extension and provides various weak data structures:
 

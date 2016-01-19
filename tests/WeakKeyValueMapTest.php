@@ -196,6 +196,15 @@ class WeakKeyValueMapTest extends PHPUnit_Framework_TestCase
         $this->assertSame($inf1, $map[$obj1]);
     }
 
+    public function testSetInfoNotObjectOnNonexistentCurrent()
+    {
+        $map = new WeakKeyValueMap();
+        $map->setInfo(null);
+
+        $this->assertTrue(true);
+    }
+
+
     /**
      * @expectedException \RuntimeException
      * @expectedExceptionMessage WeakKeyValueMap expects data to be object, NULL given
@@ -203,6 +212,12 @@ class WeakKeyValueMapTest extends PHPUnit_Framework_TestCase
     public function testSetInfoNotObject()
     {
         $map = new WeakKeyValueMap();
+
+        $obj1 = new stdClass();
+        $inf1 = new stdClass();
+        $map->attach($obj1, $inf1);
+
+        $map->rewind();
         $map->setInfo(null);
     }
 

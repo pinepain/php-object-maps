@@ -2,9 +2,9 @@
 
 This library is based on [php-weak][php-weak-ext] PHP extension and provides various weak data structures:
 
- - [class `Weak\WeakKeyMap`](class-weakweakkeymap)
- - [class `Weak\WeakValueMap`](class-weakweakvaluemap)
- - [class `Weak\WeakKeyValueMap`](class-weakweakkeyvaluemap)
+ - [class `Weak\WeakKeyMap`](#class-weakweakkeymap)
+ - [class `Weak\WeakValueMap`](#class-weakweakvaluemap)
+ - [class `Weak\WeakKeyValueMap`](#class-weakweakkeyvaluemap)
 
 
 ## Requirements

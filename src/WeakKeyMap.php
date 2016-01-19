@@ -13,7 +13,7 @@
 
 namespace Weak;
 
-class WeakKeyMap extends WeakKeyValueMap
+class WeakKeyMap extends AbstractWeakMap
 {
     protected $behavior = self::WEAK_KEY;
 }

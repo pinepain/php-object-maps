@@ -151,7 +151,7 @@ var_dump($map->count()); // 0
 
 ## License
 
-[php-weak-lib](https://github.com/pinepain/php-weak-lib) PHP library is a free software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+[php-weak-lib](https://github.com/pinepain/php-weak-lib) PHP library is licensed under the [MIT license](http://opensource.org/licenses/MIT).
 
 [php-weak-ext]: https://github.com/pinepain/php-weak
 [php-SplObjectStorage]: http://php.net/manual/en/class.splobjectstorage.php

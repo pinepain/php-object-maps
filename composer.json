@@ -21,7 +21,7 @@
   ],
   "require": {
     "php": "~7.0",
-    "ext-ref": "~0.4.0|*"
+    "ext-ref": "*"
   },
   "require-dev": {
     "phpunit/phpunit": "^5.1",

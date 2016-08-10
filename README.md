@@ -6,35 +6,30 @@
 
 This library is based on [php-ref][php-ref-ext] PHP extension and provides various weak data structures:
 
- - [class `Ref\WeakKeyMap`](#class-weakweakkeymap)
- - [class `Ref\WeakValueMap`](#class-weakweakvaluemap)
- - [class `Ref\WeakKeyValueMap`](#class-weakweakkeyvaluemap)
+ - [class `Ref\WeakKeyMap`](#class-refweakkeymap)
+ - [class `Ref\WeakValueMap`](#class-refweakvaluemap)
+ - [class `Ref\WeakKeyValueMap`](#class-refweakkeyvaluemap)
 
 
 ## Requirements
 
-[php-ref][php-ref-ext] PHP extension required. PHP 7 only (due to php-ref).
+PHP >= 7.0 and [php-ref][php-ref-ext] extension installed required.
 
 
 ## Installation:
 
-`composer require pinepain/php-ref-lib`
+    composer require pinepain/php-ref-lib
 
 
 ## Docs:
 
+
 #### Class `Ref\WeakKeyMap`
 
-Mapping class that references keys weakly. Entries will be discarded when there is no longer a reference to the key.
+Mapping class that references keys weakly. Entries will be discarded when there is no longer any references to the keyleft.
 This can be used to associate additional data with an object owned by other parts of an application without adding
 attributes to those objects. This can be especially useful with objects that override attribute accesses.
 Built on top of [`SplObjectStorage`][php-SplObjectStorage].
-
-##### Caution
-
-Because a `Ref\WeakKeyMap` is built on top of a `SplObjectStorage`, it must not change size when
-iterating over it. This can be difficult to ensure for a `Weakref\WeakKeyMap` because actions performed by the program
-during iteration may cause items in the storage to vanish "by magic" (as a side effect of garbage collection).
 
 ##### Example
 
@@ -64,17 +59,10 @@ $obj1 = null;
 var_dump($map->count()); // 1
 ```
 
-
 #### Class `Ref\WeakValueMap`
 
-Mapping class that references values weakly. Entries will be discarded when reference to the value exists any more.
+Mapping class that references values weakly. Entries will be discarded when no more reference to the value exist any more.
 Built on top of [`SplObjectStorage`][php-SplObjectStorage].
-
-##### Caution
-
-Because a `Ref\WeakValueMap` is built on top of a `SplObjectStorage`, it must not change size when
-iterating over it. This can be difficult to ensure for a `Weakref\WeakValueMap` because actions performed by the program
-during iteration may cause items in the storage to vanish "by magic" (as a side effect of garbage collection).
 
 ##### Example
 
@@ -110,12 +98,6 @@ var_dump($map->count()); // 1
 Mapping class that references values weakly. Entries will be discarded when reference to the key or value exists any more.
 Built on top of [`SplObjectStorage`][php-SplObjectStorage].
 
-##### Caution
-
-Because a `Ref\WeakKeyValueMap` is built on top of a `SplObjectStorage`, it must not change size when
-iterating over it. This can be difficult to ensure for a `Weakref\WeakKeyValueMap` because actions performed by the program
-during iteration may cause items in the storage to vanish "by magic" (as a side effect of garbage collection).
-
 ##### Example
 
 ```php
@@ -123,7 +105,7 @@ during iteration may cause items in the storage to vanish "by magic" (as a side 
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use Ref\WeakValueMap;
+use Ref\WeakKeyValueMap;
 
 $map = new WeakKeyValueMap();
 
@@ -148,6 +130,13 @@ $inf2 = null;
 
 var_dump($map->count()); // 0
 ```
+
+#### Caution
+
+Because `Ref\WeakKeyMap`,  `Ref\WeakValueMap` and `Ref\WeakKeyValueMap` classes are built on top of a `SplObjectStorage`,
+they must not change size during iterating over it. This can be difficult to ensure because actions performed during the
+iteration may cause items in the storage to vanish in a non-obvious way as a side effect of garbage collection.
+
 
 ## License
 

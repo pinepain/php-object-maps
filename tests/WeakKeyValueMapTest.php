@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of the pinepain/php-weak-lib PHP library.
+ * This file is part of the pinepain/php-ref-lib PHP library.
  *
- * Copyright (c) 2016 Bogdan Padalko <zaq178miami@gmail.com>
+ * Copyright (c) 2016 Bogdan Padalko <pinepain@gmail.com>
  *
  * Licensed under the MIT license: http://opensource.org/licenses/MIT
  *
@@ -11,12 +11,13 @@
  * file that was distributed with this source code or visit http://opensource.org/licenses/MIT
  */
 
-namespace Weak\Tests;
+namespace Ref\Tests;
 
 use PHPUnit_Framework_TestCase;
+use Ref\NotifierException;
+use Ref\WeakKeyValueMap;
 use SplObjectStorage;
 use stdClass;
-use Weak\WeakKeyValueMap;
 
 class WeakKeyValueMapTest extends PHPUnit_Framework_TestCase
 {
@@ -204,7 +205,6 @@ class WeakKeyValueMapTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(true);
     }
 
-
     /**
      * @expectedException \RuntimeException
      * @expectedExceptionMessage WeakKeyValueMap expects data to be object, NULL given
@@ -277,7 +277,29 @@ class WeakKeyValueMapTest extends PHPUnit_Framework_TestCase
         $map[$obj1] = 'should fail';
     }
 
-    public function testOffsetSetAttachs()
+    public function testGetCurrent()
+    {
+        $map = new WeakKeyValueMap();
+
+        $obj1 = new stdClass();
+        $inf1 = new stdClass();
+
+        $obj2 = new stdClass();
+        $inf2 = new stdClass();
+
+        $map->attach($obj1, $inf1);
+        $map->attach($obj2, $inf2);
+
+        $this->assertCount(2, $map);
+        $map->rewind();
+        $this->assertSame($obj1, $map->current());
+        $this->assertSame($inf1, $map->getInfo());
+        $map->next();
+        $this->assertSame($obj2, $map->current());
+        $this->assertSame($inf2, $map->getInfo());
+    }
+
+    public function testOffsetSetAttaches()
     {
         $map = new WeakKeyValueMap();
 
@@ -289,10 +311,9 @@ class WeakKeyValueMapTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($map->contains($obj1));
         $this->assertTrue(isset($map[$obj1]));
         $this->assertSame($inf1, $map[$obj1]);
-
     }
 
-    public function testGetCurrent()
+    public function testItemRemovedEvenWhenExceptionThrownInDtor()
     {
         $map = new WeakKeyValueMap();
 
@@ -313,24 +334,16 @@ class WeakKeyValueMapTest extends PHPUnit_Framework_TestCase
         $map->attach($obj2, $inf2);
 
         $this->assertCount(2, $map);
-        $map->rewind();
-        $this->assertSame($obj1, $map->current());
-        $this->assertSame($inf1, $map->getInfo());
-        $map->next();
-        $this->assertSame($obj2, $map->current());
-        $this->assertSame($inf2, $map->getInfo());
 
         try {
             $obj1 = null;
-        } catch (\Throwable $e) {
-            $this->assertSame('Prevent weakref handler to be executed', $e->getMessage());
+        } catch (NotifierException $e) {
+            $this->assertSame('One or more exceptions thrown during notifiers calling', $e->getMessage());
+            $this->assertSame('Prevent weakref handler to be executed', $e->getExceptions()[0]->getMessage());
         }
 
-        $this->assertCount(2, $map);
+        $this->assertCount(1, $map);
         $map->rewind();
-        $this->assertNull($map->current());
-        $this->assertSame($inf1, $map->getInfo());
-        $map->next();
         $this->assertSame($obj2, $map->current());
         $this->assertSame($inf2, $map->getInfo());
     }

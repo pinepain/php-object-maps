@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of the pinepain/php-weak-lib PHP library.
+ * This file is part of the pinepain/php-ref-lib PHP library.
  *
- * Copyright (c) 2016 Bogdan Padalko <zaq178miami@gmail.com>
+ * Copyright (c) 2016 Bogdan Padalko <pinepain@gmail.com>
  *
  * Licensed under the MIT license: http://opensource.org/licenses/MIT
  *
@@ -11,12 +11,12 @@
  * file that was distributed with this source code or visit http://opensource.org/licenses/MIT
  */
 
-namespace Weak\Tests;
+namespace Ref\Tests;
 
 use PHPUnit_Framework_TestCase;
+use Ref\WeakValueMap;
 use SplObjectStorage;
 use stdClass;
-use Weak\WeakValueMap;
 
 class WeakValueMapTest extends PHPUnit_Framework_TestCase
 {
@@ -174,7 +174,6 @@ class WeakValueMapTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(true);
     }
 
-
     /**
      * @expectedException \RuntimeException
      * @expectedExceptionMessage WeakValueMap expects data to be object, NULL given
@@ -268,7 +267,7 @@ class WeakValueMapTest extends PHPUnit_Framework_TestCase
         $map[$obj1] = 'should fail';
     }
 
-    public function testOffsetSetAttachs()
+    public function testOffsetSetAttaches()
     {
         $map = new WeakValueMap();
 
@@ -280,7 +279,6 @@ class WeakValueMapTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($map->contains($obj1));
         $this->assertTrue(isset($map[$obj1]));
         $this->assertSame($inf1, $map[$obj1]);
-
     }
 
     public function testAddAll()

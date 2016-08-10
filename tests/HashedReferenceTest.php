@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of the pinepain/php-weak-lib PHP library.
+ * This file is part of the pinepain/php-ref-lib PHP library.
  *
- * Copyright (c) 2016 Bogdan Padalko <zaq178miami@gmail.com>
+ * Copyright (c) 2016 Bogdan Padalko <pinepain@gmail.com>
  *
  * Licensed under the MIT license: http://opensource.org/licenses/MIT
  *
@@ -11,11 +11,11 @@
  * file that was distributed with this source code or visit http://opensource.org/licenses/MIT
  */
 
-namespace Weak\Tests;
+namespace Ref\Tests;
 
 use PHPUnit_Framework_TestCase;
 use stdClass;
-use Weak\HashedReference;
+use Ref\HashedReference;
 
 class HashedReferenceTest extends PHPUnit_Framework_TestCase
 {
@@ -24,7 +24,9 @@ class HashedReferenceTest extends PHPUnit_Framework_TestCase
         $obj = new stdClass();
         $obj_hash = 'test_hash';
 
-        $n = $this->getMock('stdClass', ['notify', 'hash']);
+        $n = $this->getMockBuilder(stdClass::class)
+            ->setMethods(['notify', 'hash'])
+            ->getMock();
 
         $n->expects($this->once())
             ->method('notify');

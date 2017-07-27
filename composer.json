@@ -1,16 +1,15 @@
 {
-  "name": "pinepain/php-ref-lib",
-  "description": "Weak-referenced data structures for PHP",
+  "name": "pinepain/php-object-maps",
+  "description": "ObjectMap structures for PHP",
   "type": "library",
   "license": "MIT",
   "keywords": [
-    "php-ref",
-    "weak",
-    "reference",
-    "weakref",
-    "weakreference",
-    "weak data types",
-    "data structure"
+    "map",
+    "bimap",
+    "object map",
+    "object bimap",
+    "weak object map",
+    "weak object bimap"
   ],
   "authors": [
     {
@@ -20,21 +19,23 @@
     }
   ],
   "require": {
-    "php": "~7.0",
-    "ext-ref": "*"
+    "php": "~7.0"
+  },
+  "suggest": {
+    "ext-ref": "Needed to support weak map variations"
   },
   "require-dev": {
-    "phpunit/phpunit": "^5.1",
-    "pinepain/php-ref-stubs": "~0.4.0"
+    "phpunit/phpunit": "^6.2",
+    "pinepain/php-ref-stubs": "~0.4.1"
   },
   "autoload": {
     "psr-4": {
-      "Ref\\": "./src"
+      "Pinepain\\ObjectMaps\\": "./src"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Ref\\Tests\\": "./tests"
+      "Pinepain\\ObjectMaps\\Tests\\": "./tests"
     }
   }
 }

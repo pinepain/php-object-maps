@@ -3,7 +3,8 @@ sudo: false
 language: php
 
 php:
-  - 7.0
+  - 7.1
+  - 7.2
   - nightly
 
 cache:
@@ -15,11 +16,11 @@ matrix:
     - php: nightly
 
 env:
-  - PHP_WEAK_VERSION=master
-  - PHP_WEAK_VERSION=v0.4.1
+  - PHP_REF_VERSION=master
+  - PHP_REF_VERSION=v0.5.0
 
 before_install:
-   - sh install_php_ref_ext.sh ${PHP_WEAK_VERSION}
+   - sh install_php_ref_ext.sh ${PHP_REF_VERSION}
    - echo 'extension = ref.so' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/ref.ini
 
 before_script:

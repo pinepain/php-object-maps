@@ -1,2 +1,10 @@
+checks:
+    php:
+        code_rating: true
+        duplication: true
+filter:
+    excluded_paths:
+      - "vendor/"
+      - "tests/"
 tools:
   external_code_coverage: true

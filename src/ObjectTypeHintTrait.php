@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * This file is part of the pinepain/php-object-maps PHP library.
@@ -11,4 +11,19 @@
  * file that was distributed with this source code or visit http://opensource.org/licenses/MIT
  */
 
-$loader = require __DIR__ . '/../vendor/autoload.php';
+namespace Pinepain\ObjectMaps;
+
+
+use function is_object;
+use Pinepain\ObjectMaps\Exceptions\UnexpectedValueException;
+
+
+trait ObjectTypeHintTrait
+{
+    protected function assertObject($value, string $name)
+    {
+        if (!is_object($value)) {
+            throw new UnexpectedValueException("{$name} is not an object");
+        }
+    }
+}

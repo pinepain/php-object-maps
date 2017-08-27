@@ -1,147 +1,44 @@
 # Weak-referenced data structures for PHP based on Ref php extension
 
-[![Build Status](https://travis-ci.org/pinepain/php-ref-lib.svg)](https://travis-ci.org/pinepain/php-ref-lib)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/pinepain/php-ref-lib/badges/quality-score.png)](https://scrutinizer-ci.com/g/pinepain/php-ref-lib)
-[![Code Coverage](https://scrutinizer-ci.com/g/pinepain/php-ref-lib/badges/coverage.png)](https://scrutinizer-ci.com/g/pinepain/php-ref-lib)
-
-This library is based on [php-ref][php-ref-ext] PHP extension and provides various weak data structures:
-
- - [class `Ref\WeakKeyMap`](#class-refweakkeymap)
- - [class `Ref\WeakValueMap`](#class-refweakvaluemap)
- - [class `Ref\WeakKeyValueMap`](#class-refweakkeyvaluemap)
-
+[![Build Status](https://travis-ci.org/pinepain/php-object-maps.svg)](https://travis-ci.org/pinepain/php-object-maps)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/pinepain/php-object-maps/badges/quality-score.png)](https://scrutinizer-ci.com/g/pinepain/php-object-maps)
+[![Code Coverage](https://scrutinizer-ci.com/g/pinepain/php-object-maps/badges/coverage.png)](https://scrutinizer-ci.com/g/pinepain/php-object-maps)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/72be40cb-1d0f-48db-b89c-c99ea007bf63/mini.png)](https://insight.sensiolabs.com/projects/72be40cb-1d0f-48db-b89c-c99ea007bf63)
 
 ## Requirements
 
-PHP >= 7.0 and [php-ref][php-ref-ext] extension installed required.
+ - PHP >= 7.1
+ - (optional, required only for maps weak behavior) [php-ref][php-ref-ext] extension
 
 
 ## Installation:
 
-    composer require pinepain/php-ref-lib
-
+    composer require pinepain/php-object-maps
 
 ## Docs:
 
+This library offers two main classes: `ObjectMap` and `ObjectBiMap`.
+They are what their name is - classic object maps which map object keys to object values.
 
-#### Class `Ref\WeakKeyMap`
+The key difference between
+`ObjectMap` and `ObjectBiMap` is that `ObjectBiMap` require all values to be unique and it offers you to get mirrored 
+`ObjectBiMap` map with keys and values from source map flipped. Note, that flipped map will still maintain connection to
+the original one and thus any modification to any `ObjectBiMap` in a chain will be reflected on all chain.  
 
-Mapping class that references keys weakly. Entries will be discarded when there is no longer any references to the keyleft.
-This can be used to associate additional data with an object owned by other parts of an application without adding
-attributes to those objects. This can be especially useful with objects that override attribute accesses.
-Built on top of [`SplObjectStorage`][php-SplObjectStorage].
+### Maps behavior
 
-##### Example
+Both `ObjectMap` and `ObjectBiMap` offers weak variations ([php-ref][php-ref-ext] extension required) which could be specified
+by passing one of `ObjectMapInterface::{WEAK_KEY,WEAK_VALUE,WEAK_KEY_VALUE}` constants to the constructor.
+By default no weakness enabled. Note, that when weak behavior enable on key or/and value, their refcount won't be
+incremented by map internals and thus it is possible that they will be destructed without a need be purged from map.
 
-```php
-<?php
+`WEAK_KEY` means that key-value pair will be removed as long as key will be destructed. `WEAK_VALUE` is the same for value
+and `WEAK_KEY_VALUE` will trigger removal when key or value will be destructed.
 
-require __DIR__ . '/../vendor/autoload.php';
-
-use Ref\WeakKeyMap;
-
-$map = new WeakKeyMap();
-
-$obj1 = new stdClass();
-$inf1 = new stdClass();
-
-$obj2 = new stdClass();
-$inf2 = new stdClass();
-
-$map->attach($obj1, $inf1);
-$map->attach($obj2, $inf2);
-
-var_dump($map->count()); // 2
-
-// Let's destroy key
-$obj1 = null;
-
-var_dump($map->count()); // 1
-```
-
-#### Class `Ref\WeakValueMap`
-
-Mapping class that references values weakly. Entries will be discarded when no more reference to the value exist any more.
-Built on top of [`SplObjectStorage`][php-SplObjectStorage].
-
-##### Example
-
-```php
-<?php
-
-require __DIR__ . '/../vendor/autoload.php';
-
-use Ref\WeakValueMap;
-
-$map = new WeakValueMap();
-
-$obj1 = new stdClass();
-$inf1 = new stdClass();
-
-$obj2 = new stdClass();
-$inf2 = new stdClass();
-
-$map->attach($obj1, $inf1);
-$map->attach($obj2, $inf2);
-
-var_dump($map->count()); // 2
-
-// Let's destroy value
-$inf1 = null;
-
-var_dump($map->count()); // 1
-```
-
-
-#### Class `Ref\WeakKeyValueMap`
-
-Mapping class that references values weakly. Entries will be discarded when reference to the key or value exists any more.
-Built on top of [`SplObjectStorage`][php-SplObjectStorage].
-
-##### Example
-
-```php
-<?php
-
-require __DIR__ . '/../vendor/autoload.php';
-
-use Ref\WeakKeyValueMap;
-
-$map = new WeakKeyValueMap();
-
-$obj1 = new stdClass();
-$inf1 = new stdClass();
-
-$obj2 = new stdClass();
-$inf2 = new stdClass();
-
-$map->attach($obj1, $inf1);
-$map->attach($obj2, $inf2);
-
-var_dump($map->count()); // 2
-
-// Let's destroy key
-$obj1 = null;
-
-var_dump($map->count()); // 1
-
-// Let's destroy value
-$inf2 = null;
-
-var_dump($map->count()); // 0
-```
-
-#### Caution
-
-Because `Ref\WeakKeyMap`,  `Ref\WeakValueMap` and `Ref\WeakKeyValueMap` classes are built on top of a `SplObjectStorage`,
-they must not change size during iterating over it. This can be difficult to ensure because actions performed during the
-iteration may cause items in the storage to vanish in a non-obvious way as a side effect of garbage collection.
-
+For more details see [tests](./tests).
 
 ## License
 
-[php-ref-lib](https://github.com/pinepain/php-ref-lib) PHP library is licensed under the [MIT license](http://opensource.org/licenses/MIT).
+[php-object-maps](https://github.com/pinepain/php-object-maps) PHP library is licensed under the [MIT license](http://opensource.org/licenses/MIT).
 
 [php-ref-ext]: https://github.com/pinepain/php-ref
-[php-SplObjectStorage]: http://php.net/manual/en/class.splobjectstorage.php
-[js-WeakMap]: https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/WeakMap

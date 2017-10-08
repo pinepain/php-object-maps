@@ -15,11 +15,9 @@
 namespace Pinepain\ObjectMaps;
 
 
-use Ref\WeakReference;
-
 use Pinepain\ObjectMaps\Exceptions\OutOfBoundsException;
 use Pinepain\ObjectMaps\Exceptions\OverflowException;
-
+use Ref\WeakReference;
 use function spl_object_hash;
 
 
@@ -74,7 +72,9 @@ class ObjectMap implements ObjectMapInterface
             throw new OutOfBoundsException('Value with such key not found');
         }
 
-        return $this->keys[$hash]->value;
+        $bucket = $this->keys[$hash];
+
+        return $this->fetchBucketValue($bucket);
     }
 
     /**
@@ -106,7 +106,7 @@ class ObjectMap implements ObjectMapInterface
 
         $this->doRemove($hash);
 
-        return $bucket->value;
+        return $this->fetchBucketValue($bucket);
     }
 
     /**
@@ -166,6 +166,22 @@ class ObjectMap implements ObjectMapInterface
     }
 
     /**
+     * @param Bucket $bucket
+     *
+     * @return null|object
+     */
+    protected function fetchBucketValue(Bucket $bucket)
+    {
+        if ($this->behavior & self::WEAK_VALUE) {
+            assert($bucket->value instanceof WeakReference);
+
+            return $bucket->value->get();
+        }
+
+        return $bucket->value;
+    }
+
+    /**
      * @param        $obj
      * @param string $hash
      *
@@ -178,10 +194,3 @@ class ObjectMap implements ObjectMapInterface
         });
     }
 }
-
-
-
-
-
-
-

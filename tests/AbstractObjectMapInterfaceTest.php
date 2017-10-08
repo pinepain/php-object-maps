@@ -57,6 +57,7 @@ abstract class AbstractObjectMapInterfaceTest extends TestCase
         $this->assertSame(0, $map->count());
         $map->put($key, $value);
         $this->assertSame(1, $map->count());
+        $this->assertSame($value, $map->get($key));
 
         $value = null;
         $this->assertSame(1, $map->count());
@@ -75,6 +76,7 @@ abstract class AbstractObjectMapInterfaceTest extends TestCase
         $this->assertSame(0, $map->count());
         $map->put($key, $value);
         $this->assertSame(1, $map->count());
+        $this->assertSame($value, $map->get($key));
 
         $key = null;
         $this->assertSame(1, $map->count());

@@ -19,14 +19,20 @@ namespace Pinepain\ObjectMaps;
  */
 final class Bucket
 {
+    /**
+     * @var object
+     */
     public $key;
+    /**
+     * @var object
+     */
     public $value;
 
     /**
      * @param object $key
      * @param object $value
      */
-    public function __construct($key, $value)
+    public function __construct(object $key, object $value)
     {
         $this->key   = $key;
         $this->value = $value;

@@ -12,7 +12,7 @@ If you like my work and want to show your appreciation, please consider supporti
 
 ## Requirements
 
- - PHP >= 7.1
+ - PHP >= 7.2
  - (optional, required only for maps weak behavior) [php-ref][php-ref-ext] extension
 
 

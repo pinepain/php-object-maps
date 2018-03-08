@@ -1,7 +1,6 @@
 # Weak-referenced data structures for PHP based on Ref php extension
 
 [![Build Status](https://travis-ci.org/pinepain/php-object-maps.svg?branch=master)](https://travis-ci.org/pinepain/php-object-maps)
-[![Build Status](https://travis-ci.org/pinepain/php-object-maps.svg?branch=master)](https://travis-ci.org/pinepain/php-object-maps)
 [![Code Coverage](https://scrutinizer-ci.com/g/pinepain/php-object-maps/badges/coverage.png?b=refactor)](https://scrutinizer-ci.com/g/pinepain/php-object-maps/?branch=refactor)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/72be40cb-1d0f-48db-b89c-c99ea007bf63/mini.png)](https://insight.sensiolabs.com/projects/72be40cb-1d0f-48db-b89c-c99ea007bf63)
 

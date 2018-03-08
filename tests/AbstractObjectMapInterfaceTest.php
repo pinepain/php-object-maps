@@ -123,28 +123,6 @@ abstract class AbstractObjectMapInterfaceTest extends TestCase
     }
 
     /**
-     * @expectedException \Pinepain\ObjectMaps\Exceptions\UnexpectedValueException
-     * @expectedExceptionMessage Key is not an object
-     */
-    public function testPutKeyNotAnObjectFails()
-    {
-        $map = $this->buildMap();
-
-        $map->put('foo', 'bar');
-    }
-
-    /**
-     * @expectedException \Pinepain\ObjectMaps\Exceptions\UnexpectedValueException
-     * @expectedExceptionMessage Value is not an object
-     */
-    public function testPutValueNotAnObjectFails()
-    {
-        $map = $this->buildMap();
-
-        $map->put(new stdClass(), 'bar');
-    }
-
-    /**
      * @expectedException \Pinepain\ObjectMaps\Exceptions\OverflowException
      * @expectedExceptionMessage Value with such key already exists
      */
@@ -160,17 +138,6 @@ abstract class AbstractObjectMapInterfaceTest extends TestCase
     }
 
     /**
-     * @expectedException \Pinepain\ObjectMaps\Exceptions\UnexpectedValueException
-     * @expectedExceptionMessage Key is not an object
-     */
-    public function testGetByNonObjectFails()
-    {
-        $map = $this->buildMap();
-
-        $map->get('test');
-    }
-
-    /**
      * @expectedException \Pinepain\ObjectMaps\Exceptions\OutOfBoundsException
      * @expectedExceptionMessage Value with such key not found
      */
@@ -179,17 +146,6 @@ abstract class AbstractObjectMapInterfaceTest extends TestCase
         $map = $this->buildMap();
 
         $map->get(new stdClass());
-    }
-
-    /**
-     * @expectedException \Pinepain\ObjectMaps\Exceptions\UnexpectedValueException
-     * @expectedExceptionMessage Key is not an object
-     */
-    public function testHasByNonObjectFails()
-    {
-        $map = $this->buildMap();
-
-        $map->has('test');
     }
 
     public function testHasNonexistentKey()
@@ -207,17 +163,6 @@ abstract class AbstractObjectMapInterfaceTest extends TestCase
         $map->put($key, new stdClass());
 
         $this->assertTrue($map->has($key));
-    }
-
-    /**
-     * @expectedException \Pinepain\ObjectMaps\Exceptions\UnexpectedValueException
-     * @expectedExceptionMessage Key is not an object
-     */
-    public function testRemoveByNonObjectFails()
-    {
-        $map = $this->buildMap();
-
-        $map->remove('test');
     }
 
     /**

@@ -21,8 +21,6 @@ use Pinepain\ObjectMaps\Exceptions\OverflowException;
 
 class ObjectBiMap implements ObjectBiMapInterface
 {
-    use ObjectTypeHintTrait;
-
     protected $behavior = self::DEFAULT;
 
     /**
@@ -84,15 +82,11 @@ class ObjectBiMap implements ObjectBiMapInterface
     /**
      * {@inheritdoc}
      */
-    public function put($key, $value)
+    public function put(object $key, object $value)
     {
-        $this->assertObject($key, 'Key');
-
         if ($this->keys->has($key)) {
             throw new OverflowException('Value with such key already exists');
         }
-
-        $this->assertObject($value, 'Value');
 
         if ($this->values->has($value)) {
             // UNEXPECTED
@@ -106,10 +100,8 @@ class ObjectBiMap implements ObjectBiMapInterface
     /**
      * {@inheritdoc}
      */
-    public function get($key)
+    public function get(object $key)
     {
-        $this->assertObject($key, 'Key');
-
         return $this->keys->get($key);
     }
 
@@ -117,20 +109,16 @@ class ObjectBiMap implements ObjectBiMapInterface
      * {@inheritdoc}
      */
 
-    public function has($key): bool
+    public function has(object $key): bool
     {
-        $this->assertObject($key, 'Key');
-
         return $this->keys->has($key);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function remove($key)
+    public function remove(object $key)
     {
-        $this->assertObject($key, 'Key');
-
         if (!$this->keys->has($key)) {
             throw new OutOfBoundsException('Value with such key not found');
         }

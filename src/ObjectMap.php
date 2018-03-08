@@ -23,8 +23,6 @@ use function spl_object_hash;
 
 class ObjectMap implements ObjectMapInterface
 {
-    use ObjectTypeHintTrait;
-
     protected $behavior = self::DEFAULT;
 
     /**
@@ -43,11 +41,8 @@ class ObjectMap implements ObjectMapInterface
     /**
      * {@inheritdoc}
      */
-    public function put($key, $value)
+    public function put(object $key, object $value)
     {
-        $this->assertObject($key, 'Key');
-        $this->assertObject($value, 'Value'); // while we may associate non-object value, for interface compatibility we don't do that
-
         $hash = $this->getHash($key);
 
         if (isset($this->keys[$hash])) {
@@ -62,10 +57,8 @@ class ObjectMap implements ObjectMapInterface
     /**
      * {@inheritdoc}
      */
-    public function get($key)
+    public function get(object $key)
     {
-        $this->assertObject($key, 'Key');
-
         $hash = $this->getHash($key);
 
         if (!isset($this->keys[$hash])) {
@@ -80,10 +73,8 @@ class ObjectMap implements ObjectMapInterface
     /**
      * {@inheritdoc}
      */
-    public function has($key): bool
+    public function has(object $key): bool
     {
-        $this->assertObject($key, 'Key');
-
         $hash = $this->getHash($key);
 
         return isset($this->keys[$hash]);
@@ -92,10 +83,8 @@ class ObjectMap implements ObjectMapInterface
     /**
      * {@inheritdoc}
      */
-    public function remove($key)
+    public function remove(object $key)
     {
-        $this->assertObject($key, 'Key');
-
         $hash = $this->getHash($key);
 
         if (!isset($this->keys[$hash])) {
@@ -130,7 +119,7 @@ class ObjectMap implements ObjectMapInterface
      *
      * @return string
      */
-    protected function getHash($value)
+    protected function getHash(object $value)
     {
         return spl_object_hash($value);
     }
@@ -152,7 +141,7 @@ class ObjectMap implements ObjectMapInterface
      *
      * @return Bucket
      */
-    protected function createBucket($key, $value, string $hash): Bucket
+    protected function createBucket(object $key, object $value, string $hash): Bucket
     {
         if ($this->behavior & self::WEAK_KEY) {
             $key = $this->createReference($key, $hash);
@@ -182,12 +171,12 @@ class ObjectMap implements ObjectMapInterface
     }
 
     /**
-     * @param        $obj
+     * @param object $obj
      * @param string $hash
      *
      * @return WeakReference
      */
-    protected function createReference($obj, string $hash): WeakReference
+    protected function createReference(object $obj, string $hash): WeakReference
     {
         return new WeakReference($obj, function () use ($hash) {
             $this->doRemove($hash);

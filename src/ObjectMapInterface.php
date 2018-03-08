@@ -33,7 +33,7 @@ interface ObjectMapInterface extends Countable
      * @throws OverflowException
      * @return void
      */
-    public function put($key, $value);
+    public function put(object $key, object $value);
 
     /**
      * @param object $key
@@ -42,14 +42,14 @@ interface ObjectMapInterface extends Countable
      *
      * @return object
      */
-    public function get($key);
+    public function get(object $key);
 
     /**
      * @param object $key
      *
      * @return bool
      */
-    public function has($key): bool;
+    public function has(object $key): bool;
 
     /**
      * @param object $key
@@ -58,7 +58,7 @@ interface ObjectMapInterface extends Countable
      *
      * @return object
      */
-    public function remove($key);
+    public function remove(object $key);
 
     /**
      * @return void

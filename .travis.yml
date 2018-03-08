@@ -3,7 +3,6 @@ sudo: false
 language: php
 
 php:
-  - 7.1
   - 7.2
   - nightly
 
@@ -17,7 +16,7 @@ matrix:
 
 env:
   - PHP_REF_VERSION=master
-  - PHP_REF_VERSION=v0.5.0
+  - PHP_REF_VERSION=v0.6.0
 
 before_install:
    - sh install_php_ref_ext.sh ${PHP_REF_VERSION}

@@ -1,5 +1,0 @@
-pre_composer_script: |
-    pecl install ref
-
-php_ini: |
-    extension=ref.so

@@ -1,3 +1,8 @@
+WARNING: This project is UNSUPPORTED and ABANDONED
+==================================================
+
+I'm moving away from PHP world and all my PHP projects going to be abandoned too. Closing this issue as I have no intent to continue working on it unless there would be strong request from community and commercial interest. No more updates or documentation will be made. If someone is interested, feels free to contact me using email specified in my GitHub profile.
+
 # Weak-referenced data structures for PHP based on Ref php extension
 
 [![Build Status](https://travis-ci.org/pinepain/php-object-maps.svg?branch=master)](https://travis-ci.org/pinepain/php-object-maps)
